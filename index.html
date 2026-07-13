@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monolith Custom Homes — Bellaire · Houston · Texas</title>
+<meta name="description" content="Monolith Custom Homes designs and builds bespoke concrete residences in Bellaire, Houston. Homes built to outlast a lifetime.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0d0b09;
+    --charcoal:#17130f;
+    --bone:#f2ede4;
+    --stone:#8a8377;
+    --gold:#d8b36a;
+    --line:#2a241d;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--ink);
+    color:var(--bone);
+    font-family:'Inter',sans-serif;
+    font-weight:300;
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{ font-family:'Cormorant Garamond',serif; font-weight:600; line-height:1.1; }
+  em{ font-style:italic; color:var(--gold); }
+  .eyebrow{
+    font-size:11px; letter-spacing:0.28em; text-transform:uppercase;
+    color:var(--gold); font-weight:500;
+  }
+
+  /* ---------- NAV ---------- */
+  .site-nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:20px 5vw;
+    background:rgba(13,11,9,0.0);
+    transform:translateY(-100%);
+    transition:transform .5s ease, background .5s ease;
+  }
+  .site-nav.visible{ transform:translateY(0); background:rgba(13,11,9,0.88); backdrop-filter:blur(8px); }
+  .site-nav .wordmark{ font-family:'Cormorant Garamond',serif; font-size:20px; letter-spacing:0.35em; }
+  .site-nav a{ color:var(--bone); text-decoration:none; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; margin-left:28px; }
+  .site-nav a:hover{ color:var(--gold); }
+  .site-nav .links{ display:flex; }
+  @media (max-width:700px){ .site-nav .links a:not(:last-child){ display:none; } }
+
+  /* ---------- HERO / SCRUB ---------- */
+  .scrub-track{ height:520vh; position:relative; }
+  .scrub-stage{
+    position:sticky; top:0; height:100vh; height:100dvh;
+    overflow:hidden;
+  }
+  .scrub-stage video{
+    position:absolute; top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    height:100%; width:auto;
+  }
+  video.vid-bg{
+    width:110%; height:110%; object-fit:cover;
+    filter:blur(26px) brightness(0.45);
+  }
+  @media (max-width:820px){
+    video.vid-bg{ display:none; }
+    video.vid-fg{ width:100%; height:100%; object-fit:cover; }
+  }
+
+  .hero-copy{
+    position:absolute; top:0; left:0; right:0; bottom:0;
+    display:flex; flex-direction:column; justify-content:center; align-items:center;
+    text-align:center; pointer-events:none; padding:0 6vw;
+    transition:opacity .4s ease;
+  }
+  .hero-copy h1{ font-size:15vw; }
+  @media (min-width:700px){ .hero-copy h1{ font-size:6.5vw; } }
+  .hero-copy .eyebrow{ margin-bottom:18px; }
+  .hero-copy .hint{
+    position:absolute; bottom:6vh; left:0; right:0;
+    font-size:11px; letter-spacing:0.3em; text-transform:uppercase; color:var(--stone);
+    animation:hintPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes hintPulse{ 0%,100%{opacity:.35} 50%{opacity:.9} }
+
+  .hero-outro{
+    position:absolute; top:0; left:0; right:0; bottom:0;
+    display:flex; flex-direction:column; justify-content:flex-end; align-items:center;
+    padding-bottom:12vh; text-align:center; pointer-events:none; opacity:0;
+  }
+  .hero-outro h2{ font-size:9vw; }
+  @media (min-width:700px){ .hero-outro h2{ font-size:3.4vw; } }
+  .hero-outro .rule{ width:120px; height:1px; background:var(--gold); margin:20px auto 0; }
+
+  /* poured-concrete progress line */
+  .pour-line{
+    position:absolute; top:0; bottom:0; right:24px; width:1px;
+    background:var(--line);
+  }
+  .pour-line .fill{
+    position:absolute; top:0; left:0; width:100%; height:0%;
+    background:var(--gold);
+  }
+  @media (max-width:700px){ .pour-line{ right:14px; } }
+
+  /* ---------- SECTIONS ---------- */
+  section{ padding:16vh 8vw; position:relative; }
+  .reveal{ opacity:0; transform:translateY(34px); transition:opacity .9s ease, transform .9s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  .about-grid{ display:grid; grid-template-columns:1fr; gap:8vh; max-width:1200px; margin:0 auto; }
+  @media (min-width:900px){ .about-grid{ grid-template-columns:1.1fr 0.9fr; align-items:center; gap:6vw; } }
+  .about-grid h2{ font-size:44px; margin:16px 0 26px; }
+  @media (min-width:900px){ .about-grid h2{ font-size:56px; } }
+  .about-grid p{ color:var(--stone); max-width:56ch; }
+  .about-photo{
+    aspect-ratio:4/5; border:1px solid var(--line);
+    background:
+      linear-gradient(160deg, rgba(216,179,106,0.10), rgba(13,11,9,0) 55%),
+      
+    background:linear-gradient(160deg, rgba(216,179,106,0.10), rgba(13,11,9,0) 55%), #17130f;
+    display:flex; align-items:flex-end; padding:22px;
+  }
+  .about-photo span{ font-size:11px; letter-spacing:0.25em; text-transform:uppercase; color:var(--stone); }
+
+  /* process */
+  #process{ background:var(--charcoal); }
+  .process-head{ max-width:1200px; margin:0 auto 10vh; }
+  .process-head h2{ font-size:44px; margin-top:16px; }
+  @media (min-width:900px){ .process-head h2{ font-size:56px; } }
+  .process-wrap{ position:relative; max-width:1200px; margin:0 auto; }
+  #wireframe-holder{
+    position:absolute; top:0; right:0; width:46%; height:100%;
+    opacity:0.5; pointer-events:none;
+  }
+  @media (max-width:900px){ #wireframe-holder{ display:none; } }
+  .stage-list{ position:relative; max-width:560px; }
+  .stage{ border-top:1px solid var(--line); padding:34px 0; }
+  .stage:last-child{ border-bottom:1px solid var(--line); }
+  .stage .num{ font-family:'Cormorant Garamond',serif; color:var(--gold); font-size:22px; margin-right:18px; }
+  .stage h3{ display:inline; font-size:26px; }
+  .stage p{ color:var(--stone); margin-top:12px; max-width:48ch; }
+
+  /* portfolio */
+  .folio-head{ max-width:1200px; margin:0 auto 8vh; }
+  .folio-head h2{ font-size:44px; margin-top:16px; }
+  @media (min-width:900px){ .folio-head h2{ font-size:56px; } }
+  .folio-grid{ display:grid; grid-template-columns:1fr; gap:20px; max-width:1200px; margin:0 auto; }
+  @media (min-width:760px){ .folio-grid{ grid-template-columns:repeat(3,1fr); } }
+  .folio-item{
+    aspect-ratio:4/5; overflow:hidden; position:relative; border:1px solid var(--line);
+    background:#17130f;
+  }
+  .folio-item .ph{
+    position:absolute; top:0; left:0; width:100%; height:100%;
+    background:linear-gradient(150deg, rgba(216,179,106,0.12), rgba(13,11,9,0) 60%);
+    transition:transform .8s ease;
+  }
+  .folio-item:hover .ph{ transform:scale(1.06); }
+  .folio-item figcaption{
+    position:absolute; left:18px; bottom:16px;
+    font-size:11px; letter-spacing:0.22em; text-transform:uppercase; color:var(--bone);
+  }
+
+  /* contact */
+  #contact{ background:var(--charcoal); }
+  .contact-inner{ max-width:680px; margin:0 auto; text-align:center; }
+  .contact-inner h2{ font-size:44px; margin:16px 0 14px; }
+  @media (min-width:900px){ .contact-inner h2{ font-size:54px; } }
+  .contact-inner .loc{ color:var(--stone); font-size:12px; letter-spacing:0.25em; text-transform:uppercase; margin-bottom:6vh; }
+  form{ display:grid; gap:16px; text-align:left; }
+  input, textarea{
+    width:100%; background:var(--ink); border:1px solid var(--line);
+    color:var(--bone); padding:16px 18px; font-family:'Inter',sans-serif; font-size:15px;
+  }
+  input:focus, textarea:focus{ outline:1px solid var(--gold); }
+  button[type=submit]{
+    background:linear-gradient(100deg, #c8a35c, #e5c688 60%, #c8a35c);
+    color:#141009; border:0; padding:18px;
+    font-size:13px; letter-spacing:0.28em; text-transform:uppercase; font-weight:500;
+    cursor:pointer;
+  }
+  button[type=submit]:hover{ filter:brightness(1.06); }
+
+  footer{ padding:8vh 8vw; text-align:center; color:var(--stone); font-size:12px; letter-spacing:0.2em; }
+  footer .wordmark{ font-family:'Cormorant Garamond',serif; color:var(--bone); font-size:18px; letter-spacing:0.35em; margin-bottom:12px; }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{ outline:2px solid var(--gold); outline-offset:2px; }
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+    .hero-copy .hint{ animation:none; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav" id="siteNav">
+  <div class="wordmark">MONOLITH</div>
+  <div class="links">
+    <a href="#about">About</a>
+    <a href="#process">Process</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#contact">Book a consult</a>
+  </div>
+</nav>
+
+<!-- HERO: scroll builds the house -->
+<div class="scrub-track" id="scrubTrack">
+  <div class="scrub-stage">
+    <video class="vid-bg" id="vidBg" muted playsinline preload="auto" src="monolith_build.mp4"></video>
+    <video class="vid-fg" id="vidFg" muted playsinline preload="auto" src="monolith_build.mp4"></video>
+
+    <div class="hero-copy" id="heroCopy">
+      <div class="eyebrow">Bellaire &middot; Houston &middot; Texas</div>
+      <h1>Homes built<br><em>to outlast</em><br>a lifetime.</h1>
+      <div class="hint">Scroll to build</div>
+    </div>
+
+    <div class="hero-outro" id="heroOutro">
+      <h2>Designed to outlast a lifetime</h2>
+      <div class="rule"></div>
+    </div>
+
+    <div class="pour-line"><div class="fill" id="pourFill"></div></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="reveal">
+      <div class="eyebrow">The firm</div>
+      <h2>Concrete, steel, timber &mdash; and <em>quiet craftsmanship</em>.</h2>
+      <p>Monolith Custom Homes designs and builds bespoke residences for discerning clients across Bellaire and greater Houston. Every home begins as engineered concrete and steel &mdash; a structure meant to be handed down, not replaced &mdash; and is finished with stone, stucco and wood shaped around the way you live.</p>
+    </div>
+    <div class="about-photo reveal"><span>Residence &mdash; Bellaire</span></div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="process-head reveal">
+    <div class="eyebrow">How a Monolith is made</div>
+    <h2>Four stages. <em>One structure.</em></h2>
+  </div>
+  <div class="process-wrap">
+    <div id="wireframe-holder"></div>
+    <div class="stage-list">
+      <div class="stage reveal"><span class="num">I.</span><h3>Engineered concrete foundation</h3><p>Soil analysis, engineered slab and pour &mdash; the base every Monolith stands on for the next hundred years.</p></div>
+      <div class="stage reveal"><span class="num">II.</span><h3>Steel-reinforced structure</h3><p>Concrete columns and slabs with steel rebar, floor by floor. No shortcuts inside the walls.</p></div>
+      <div class="stage reveal"><span class="num">III.</span><h3>Stone &amp; stucco craftsmanship</h3><p>Grey stone, white stucco and warm wood detailing &mdash; the finish that gives each residence its face.</p></div>
+      <div class="stage reveal"><span class="num">IV.</span><h3>Landscape &amp; handover</h3><p>Lawns, hedges and pathways set the house into its lot. Then we hand you the keys &mdash; and stand behind the build.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="folio-head reveal">
+    <div class="eyebrow">Selected work</div>
+    <h2>Built to be <em>lived in</em>.</h2>
+  </div>
+  <div class="folio-grid">
+    <figure class="folio-item reveal"><div class="ph"></div><figcaption>Bellaire Residence</figcaption></figure>
+    <figure class="folio-item reveal"><div class="ph"></div><figcaption>Oak Court</figcaption></figure>
+    <figure class="folio-item reveal"><div class="ph"></div><figcaption>Memorial Villa</figcaption></figure>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner reveal">
+    <div class="eyebrow">Start the conversation</div>
+    <h2>Book a <em>consult</em></h2>
+    <div class="loc">Bellaire &middot; Houston &middot; Texas</div>
+    <form action="mailto:info@monolithcustomhomes.com" method="post" enctype="text/plain">
+      <input type="text" name="name" placeholder="Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <textarea name="message" rows="5" placeholder="Tell us about your lot and your vision" required></textarea>
+      <button type="submit">Request a consultation</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wordmark">MONOLITH</div>
+  &copy; 2026 Monolith Custom Homes &mdash; Bellaire, Houston, Texas
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  /* ===== Tunables ===== */
+  var SCRUB_EASING = 0.25;      // how fast currentTime chases the target (0-1)
+  var HERO_FADE_OUT = 0.10;     // hero copy fades within first 10% of scroll
+  var OUTRO_FADE_IN = 0.88;     // outro fades in over the last 12%
+  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ===== Scroll-scrubbed hero video ===== */
+  var track = document.getElementById("scrubTrack");
+  var vidFg = document.getElementById("vidFg");
+  var vidBg = document.getElementById("vidBg");
+  var heroCopy = document.getElementById("heroCopy");
+  var heroOutro = document.getElementById("heroOutro");
+  var pourFill = document.getElementById("pourFill");
+  var siteNav = document.getElementById("siteNav");
+  var targetTime = 0;
+  var progress = 0;
+
+  function paintFirstFrame(v){
+    if(!v) return;
+    var done = false;
+    function tryPaint(){
+      if(done) return;
+      done = true;
+      try{
+        v.currentTime = 0.001;
+        var p = v.play();
+        if(p && p.then){ p.then(function(){ v.pause(); }).catch(function(){}); }
+      }catch(e){}
+    }
+    if(v.readyState >= 1){ tryPaint(); }
+    else{ v.addEventListener("loadedmetadata", tryPaint); }
+  }
+  paintFirstFrame(vidFg);
+  paintFirstFrame(vidBg);
+
+  function onScroll(){
+    var rect = track.getBoundingClientRect();
+    var scrollable = track.offsetHeight - window.innerHeight;
+    progress = Math.min(Math.max(-rect.top / scrollable, 0), 1);
+    if(vidFg.duration){ targetTime = progress * (vidFg.duration - 0.05); }
+
+    /* overlays */
+    heroCopy.style.opacity = String(Math.max(0, 1 - progress / HERO_FADE_OUT));
+    heroOutro.style.opacity = String(Math.min(1, Math.max(0, (progress - OUTRO_FADE_IN) / (1 - OUTRO_FADE_IN))));
+    pourFill.style.height = (progress * 100).toFixed(2) + "%";
+
+    /* nav appears after the hero */
+    if(rect.bottom <= window.innerHeight + 40){ siteNav.classList.add("visible"); }
+    else{ siteNav.classList.remove("visible"); }
+  }
+
+  function tick(){
+    if(vidFg.duration){
+      var diff = targetTime - vidFg.currentTime;
+      if(Math.abs(diff) > 0.01){
+        var next = vidFg.currentTime + diff * SCRUB_EASING;
+        vidFg.currentTime = next;
+        if(vidBg){ vidBg.currentTime = next; }
+      }
+    }
+    window.requestAnimationFrame(tick);
+  }
+
+  if(reducedMotion){
+    /* static poster + copy, no scrub */
+    track.style.height = "100vh";
+    heroCopy.style.opacity = "1";
+  }else{
+    window.addEventListener("scroll", onScroll, { passive:true });
+    vidFg.addEventListener("loadedmetadata", onScroll);
+    window.requestAnimationFrame(tick);
+  }
+
+  /* ===== Reveal on enter ===== */
+  var revealEls = document.querySelectorAll(".reveal");
+  if("IntersectionObserver" in window && !reducedMotion){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.18 });
+    revealEls.forEach(function(el){ io.observe(el); });
+  }else{
+    revealEls.forEach(function(el){ el.classList.add("in"); });
+  }
+
+  /* ===== Subtle 3D wireframe house (Process section) ===== */
+  var holder = document.getElementById("wireframe-holder");
+  var lowEnd = (navigator.hardwareConcurrency || 8) < 4;
+  if(holder && window.THREE && !reducedMotion && !lowEnd && holder.offsetParent !== null){
+    var renderer = new THREE.WebGLRenderer({ alpha:true, antialias:true });
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+    camera.position.set(3.6, 2.4, 5.2);
+    camera.lookAt(0, 0.7, 0);
+
+    function sizeRenderer(){
+      var w = holder.clientWidth, h = holder.clientHeight;
+      renderer.setSize(w, h);
+      camera.aspect = w / Math.max(h, 1);
+      camera.updateProjectionMatrix();
+    }
+
+    var group = new THREE.Group();
+    var mat = new THREE.LineBasicMaterial({ color: 0xd8b36a, transparent:true, opacity:0.55 });
+
+    function addBox(w, h, d, x, y, z){
+      var geo = new THREE.BoxGeometry(w, h, d);
+      var edges = new THREE.EdgesGeometry(geo);
+      var line = new THREE.LineSegments(edges, mat);
+      line.position.set(x, y, z);
+      group.add(line);
+    }
+    /* stylised two-volume modern house */
+    addBox(2.6, 1.0, 1.8, 0, 0.5, 0);      /* ground floor */
+    addBox(2.2, 0.9, 1.6, 0.25, 1.45, 0);  /* upper volume, offset */
+    addBox(0.9, 0.75, 0.05, -0.6, 0.4, 0.92); /* entrance panel */
+    scene.add(group);
+
+    renderer.domElement.style.width = "100%";
+    renderer.domElement.style.height = "100%";
+    holder.appendChild(renderer.domElement);
+    sizeRenderer();
+    window.addEventListener("resize", sizeRenderer);
+
+    var mouseX = 0;
+    window.addEventListener("mousemove", function(e){
+      mouseX = (e.clientX / window.innerWidth) - 0.5;
+    }, { passive:true });
+
+    var wfVisible = false;
+    var wfObserver = new IntersectionObserver(function(entries){
+      wfVisible = entries[0].isIntersecting;
+    }, { threshold: 0.05 });
+    wfObserver.observe(holder);
+
+    (function animate(){
+      window.requestAnimationFrame(animate);
+      if(!wfVisible) return;
+      group.rotation.y += 0.0022 + mouseX * 0.004;
+      renderer.render(scene, camera);
+    })();
+  }
+})();
+</script>
+</body>
+</html>
