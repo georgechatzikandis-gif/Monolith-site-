@@ -253,8 +253,8 @@
 <!-- HERO: scroll builds the house -->
 <div class="scrub-track" id="scrubTrack">
   <div class="scrub-stage">
-    <video class="vid-bg" id="vidBg" muted playsinline preload="auto" src="monolith build.mp4"></video>
-    <video class="vid-fg" id="vidFg" muted playsinline preload="auto" src="monolith build.mp4"></video>
+    <video class="vid-bg" id="vidBg" muted playsinline preload="auto" src="monolith_build.mp4"></video>
+    <video class="vid-fg" id="vidFg" muted playsinline preload="auto" src="monolith_build.mp4"></video>
 
     <div class="hero-copy" id="heroCopy">
       <div class="eyebrow">Bellaire &middot; Houston &middot; Texas</div>
@@ -446,9 +446,7 @@
   var interiorHead = document.getElementById("interiorHead");
   var interiorFill = document.getElementById("interiorFill");
   var interiorTarget = 0;
-  interiorVid.src = window.matchMedia("(max-width:820px)").matches
-    ? "monolith interior mobile.mp4"
-    : "monolith interior.mp4";
+  interiorVid.src = "monolith_interior.mp4";
   paintFirstFrame(interiorVid);
   function showInterior(){ interiorVid.style.opacity = "1"; }
   interiorVid.addEventListener("loadeddata", showInterior);
