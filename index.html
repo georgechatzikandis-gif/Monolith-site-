@@ -185,6 +185,18 @@
   }
   button[type=submit]:hover{ filter:brightness(1.06); }
 
+
+  /* interior walkthrough */
+  #interior{ background:var(--charcoal); }
+  .interior-head{ max-width:1200px; margin:0 auto 8vh; }
+  .interior-head h2{ font-size:44px; margin-top:16px; }
+  @media (min-width:900px){ .interior-head h2{ font-size:56px; } }
+  .interior-frame{
+    max-width:1100px; margin:0 auto; border:1px solid var(--line);
+    background:#000;
+  }
+  .interior-frame video{ display:block; width:100%; height:auto; }
+
   footer{ padding:8vh 8vw; text-align:center; color:var(--stone); font-size:12px; letter-spacing:0.2em; }
   footer .wordmark{ font-family:'Cormorant Garamond',serif; color:var(--bone); font-size:18px; letter-spacing:0.35em; margin-bottom:12px; }
 
@@ -205,6 +217,7 @@
   <div class="links">
     <a href="#about">About</a>
     <a href="#process">Process</a>
+    <a href="#interior">Interiors</a>
     <a href="#portfolio">Portfolio</a>
     <a href="#contact">Book a consult</a>
   </div>
@@ -257,6 +270,18 @@
       <div class="stage reveal"><span class="num">III.</span><h3>Stone &amp; stucco craftsmanship</h3><p>Grey stone, white stucco and warm wood detailing &mdash; the finish that gives each residence its face.</p></div>
       <div class="stage reveal"><span class="num">IV.</span><h3>Landscape &amp; handover</h3><p>Lawns, hedges and pathways set the house into its lot. Then we hand you the keys &mdash; and stand behind the build.</p></div>
     </div>
+  </div>
+</section>
+
+
+<!-- INTERIOR WALKTHROUGH -->
+<section id="interior">
+  <div class="interior-head reveal">
+    <div class="eyebrow">Step inside</div>
+    <h2>A walkthrough of the <em>finished home</em>.</h2>
+  </div>
+  <div class="interior-frame reveal">
+    <video id="interiorVid" muted playsinline loop preload="metadata" src="monolith_interior.mp4"></video>
   </div>
 </section>
 
@@ -382,6 +407,19 @@
     revealEls.forEach(function(el){ io.observe(el); });
   }else{
     revealEls.forEach(function(el){ el.classList.add("in"); });
+  }
+
+
+  /* interior video: play only while visible */
+  var interiorVid = document.getElementById("interiorVid");
+  if(interiorVid && "IntersectionObserver" in window){
+    var vio = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ interiorVid.play().catch(function(){}); }
+        else{ interiorVid.pause(); }
+      });
+    }, { threshold: 0.35 });
+    vio.observe(interiorVid);
   }
 
   /* ===== Subtle 3D wireframe house (Process section) ===== */
