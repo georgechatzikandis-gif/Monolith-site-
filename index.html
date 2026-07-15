@@ -101,8 +101,9 @@
   /* ---------- SECTIONS ---------- */
   section{ padding:16vh 8vw; position:relative; }
 
-  /* ---- Portfolio Carousel ---- */
-  .portfolio-carousel-section{ padding:0; overflow:hidden; }
+  /* ---- About Carousel ---- */
+  .about-carousel-wrap{ aspect-ratio:4/5; border:1px solid var(--line); overflow:hidden; }
+  .about-carousel-wrap .carousel{ height:100%; }
   .carousel{
     position:relative; width:100%; height:72vh; height:72dvh;
     overflow:hidden; user-select:none; cursor:grab;
@@ -333,7 +334,20 @@
       <h2>Concrete, steel, timber &mdash; and <em>quiet craftsmanship</em>.</h2>
       <p>Monolith Custom Homes designs and builds bespoke residences for discerning clients across Bellaire and greater Houston. Every home begins as engineered concrete and steel &mdash; a structure meant to be handed down, not replaced &mdash; and is finished with stone, stucco and wood shaped around the way you live.</p>
     </div>
-    <div class="about-photo reveal"><span>Residence &mdash; Bellaire</span></div>
+    <div class="about-carousel-wrap reveal">
+      <div class="carousel" id="aboutCarousel">
+        <div class="carousel-track" id="carouselTrack">
+          <div class="carousel-slide"><img src="photo1.jpg" alt="Bellaire Residence — Exterior" draggable="false"></div>
+          <div class="carousel-slide"><img src="photo2.jpg" alt="Open Living Plan" draggable="false"></div>
+          <div class="carousel-slide"><img src="photo3.jpg" alt="Living Room" draggable="false"></div>
+          <div class="carousel-slide"><img src="photo4.jpg" alt="Dining Room" draggable="false"></div>
+          <div class="carousel-slide"><img src="photo5.jpg" alt="Dining Detail" draggable="false"></div>
+        </div>
+        <button class="car-prev" aria-label="Previous">&#8592;</button>
+        <button class="car-next" aria-label="Next">&#8594;</button>
+        <div class="car-dots" id="carDots"></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -370,23 +384,15 @@
 </section>
 
 <!-- PORTFOLIO -->
-<section id="portfolio" class="portfolio-carousel-section">
-  <div class="carousel reveal" id="portfolioCarousel">
-    <div class="carousel-track" id="carouselTrack">
-      <div class="carousel-slide"><img src="photo1.jpg" alt="Bellaire Residence — Exterior" draggable="false"></div>
-      <div class="carousel-slide"><img src="photo2.jpg" alt="Open Living Plan" draggable="false"></div>
-      <div class="carousel-slide"><img src="photo3.jpg" alt="Living Room" draggable="false"></div>
-      <div class="carousel-slide"><img src="photo4.jpg" alt="Dining Room" draggable="false"></div>
-      <div class="carousel-slide"><img src="photo5.jpg" alt="Dining Detail" draggable="false"></div>
-    </div>
-    <button class="car-prev" aria-label="Previous">&#8592;</button>
-    <button class="car-next" aria-label="Next">&#8594;</button>
-    <div class="car-dots" id="carDots"></div>
-    <div class="car-copy">
-      <div class="eyebrow">Selected work</div>
-      <h2>Built to be <em>lived in</em>.</h2>
-      <p>Bespoke residences across Bellaire and greater Houston &mdash; each one designed and built for a single family, from slab to handover.</p>
-    </div>
+<section id="portfolio">
+  <div class="folio-head reveal">
+    <div class="eyebrow">Selected work</div>
+    <h2>Built to be <em>lived in</em>.</h2>
+  </div>
+  <div class="folio-grid">
+    <figure class="folio-item reveal"><div class="ph"></div><figcaption>Bellaire Residence</figcaption></figure>
+    <figure class="folio-item reveal"><div class="ph"></div><figcaption>Oak Court</figcaption></figure>
+    <figure class="folio-item reveal"><div class="ph"></div><figcaption>Memorial Villa</figcaption></figure>
   </div>
 </section>
 
@@ -566,7 +572,7 @@
     interiorTrack.style.height = "100vh";
   }
 
-  /* ===== Portfolio Carousel ===== */
+  /* ===== About Carousel ===== */
   (function(){
     var track = document.getElementById("carouselTrack");
     if(!track) return;
@@ -586,7 +592,7 @@
       dots.forEach(function(d,i){d.classList.toggle("active",i===cur);});
     }
     go(0);
-    var el=document.getElementById("portfolioCarousel");
+    var el=document.getElementById("aboutCarousel");
     el.querySelector(".car-prev").addEventListener("click",function(){go(cur-1);});
     el.querySelector(".car-next").addEventListener("click",function(){go(cur+1);});
     /* auto-advance, pauses on hover */
