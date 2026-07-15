@@ -416,7 +416,7 @@
   "use strict";
 
   /* ===== Tunables ===== */
-  var SCRUB_EASING = 0.65;      // how fast currentTime chases the target (0-1)
+  var SCRUB_EASING = 0.25;      // how fast currentTime chases the target (0-1)
   var HERO_FADE_OUT = 0.10;     // hero copy fades within first 10% of scroll
   var OUTRO_FADE_IN = 0.88;     // outro fades in over the last 12%
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -472,13 +472,13 @@
   function tick(){
     if(heroInView && vidFg.duration){
       var diff = targetTime - vidFg.currentTime;
-      if(Math.abs(diff) > 0.01){
+      if(Math.abs(diff) > 0.04){
         vidFg.currentTime = vidFg.currentTime + diff * SCRUB_EASING;
       }
     }
     if(interiorInView && interiorVid && interiorVid.duration){
       var d = interiorTarget - interiorVid.currentTime;
-      if(Math.abs(d) > 0.01){ interiorVid.currentTime += d * SCRUB_EASING; }
+      if(Math.abs(d) > 0.04){ interiorVid.currentTime += d * SCRUB_EASING; }
     }
     window.requestAnimationFrame(tick);
   }
