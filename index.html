@@ -248,28 +248,15 @@
   button[type=submit]:hover{ filter:brightness(1.06); }
 
 
-  /* interior walkthrough - scroll-scrubbed like the hero */
-  #interior{ background:var(--charcoal); padding:0; }
-  .interior-track{ height:900vh; position:relative; }
-  .interior-stage{
-    position:sticky; top:0; height:100vh; height:100dvh;
-    overflow:hidden; background:var(--ink);
-  }
-  .interior-stage video{
-    position:absolute; top:50%; left:50%;
-    transform:translate(-50%,-50%);
-    width:auto; height:auto;
-    min-width:100vw; min-height:100vh; min-height:100dvh;
-    max-width:none; max-height:none;
-  }
-  @media (max-width:820px){
-    .interior-stage{ background:var(--ink); }
-    .interior-head{ bottom:4vh; }
+  /* interior – looping background video */
+  #interior{ padding:0; position:relative; height:90vh; height:90dvh; overflow:hidden; }
+  #interior video{
+    position:absolute; top:0; left:0;
+    width:100%; height:100%; object-fit:cover;
   }
   .interior-head{
     position:absolute; left:0; right:0; bottom:7vh; z-index:2;
     text-align:center; pointer-events:none;
-    transition:opacity .4s ease;
   }
   .interior-head h2{
     font-size:34px; margin-top:14px; color:#f6f2e9;
@@ -277,9 +264,6 @@
   }
   @media (min-width:900px){ .interior-head h2{ font-size:52px; } }
   .interior-head .eyebrow{ color:#e9c877; text-shadow:0 1px 10px rgba(0,0,0,.55); }
-  .interior-pour{ position:absolute; top:0; bottom:0; right:24px; width:1px; background:rgba(255,255,255,.25); }
-  .interior-pour .fill{ position:absolute; top:0; left:0; width:100%; height:0%; background:var(--gold); }
-  @media (max-width:700px){ .interior-pour{ right:14px; } }
 
   footer{ padding:8vh 8vw; text-align:center; color:var(--stone); font-size:12px; letter-spacing:0.2em; }
   footer .wordmark{ font-family:'Cormorant Garamond',serif; color:var(--bone); font-size:18px; letter-spacing:0.35em; margin-bottom:12px; }
@@ -369,17 +353,12 @@
 </section>
 
 
-<!-- INTERIOR WALKTHROUGH -->
+<!-- INTERIOR – looping video -->
 <section id="interior">
-  <div class="interior-track" id="interiorTrack">
-    <div class="interior-stage">
-      <video id="interiorVid" muted playsinline preload="auto" style="opacity:0; transition:opacity .5s ease;"></video>
-      <div class="interior-head" id="interiorHead">
-        <div class="eyebrow">Step inside</div>
-        <h2>Scroll to walk the <em>finished home</em>.</h2>
-      </div>
-      <div class="interior-pour"><div class="fill" id="interiorFill"></div></div>
-    </div>
+  <video muted playsinline autoplay loop preload="auto" src="monolith_interior2.mp4"></video>
+  <div class="interior-head">
+    <div class="eyebrow">Step inside</div>
+    <h2>Walk the <em>finished home</em>.</h2>
   </div>
 </section>
 
@@ -482,10 +461,7 @@
         vidFg.currentTime = vidFg.currentTime + diff * SCRUB_EASING;
       }
     }
-    if(interiorInView && interiorVid && interiorVid.duration){
-      var d = interiorTarget - interiorVid.currentTime;
-      if(Math.abs(d) > 0.04){ interiorVid.currentTime += d * SCRUB_EASING; }
-    }
+
     window.requestAnimationFrame(tick);
   }
 
@@ -527,50 +503,6 @@
     });
   }
 
-
-  /* interior walkthrough: scroll-scrubbed, lazy-loaded */
-  var interiorTrack = document.getElementById("interiorTrack");
-  var interiorVid = document.getElementById("interiorVid");
-  var interiorHead = document.getElementById("interiorHead");
-  var interiorFill = document.getElementById("interiorFill");
-  var interiorTarget = 0;
-  var interiorInView = false;
-
-  function showInterior(){ interiorVid.style.opacity = "1"; }
-  interiorVid.addEventListener("loadeddata", showInterior);
-  interiorVid.addEventListener("timeupdate", showInterior, { once:true });
-
-  function onInteriorScroll(){
-    var rect = interiorTrack.getBoundingClientRect();
-    var scrollable = interiorTrack.offsetHeight - window.innerHeight;
-    var p = Math.min(Math.max(-rect.top / scrollable, 0), 1);
-    if(interiorVid.duration){ interiorTarget = p * (interiorVid.duration - 0.05); }
-    interiorHead.style.opacity = String(Math.max(0, 1 - p / 0.06));
-    interiorFill.style.height = (p * 100).toFixed(2) + "%";
-  }
-
-  if(!reducedMotion && interiorTrack){
-    /* Load interior video only when approaching the section */
-    var interiorLoaded = false;
-    if("IntersectionObserver" in window){
-      new IntersectionObserver(function(e){
-        interiorInView = e[0].isIntersecting;
-        if(interiorInView && !interiorLoaded){
-          interiorLoaded = true;
-          interiorVid.src = "monolith_interior.mp4";
-          paintFirstFrame(interiorVid);
-          interiorVid.addEventListener("loadedmetadata", onInteriorScroll);
-        }
-      }, { rootMargin:"400px", threshold:0 }).observe(interiorTrack);
-    } else {
-      interiorVid.src = "monolith_interior.mp4";
-      paintFirstFrame(interiorVid);
-      interiorVid.addEventListener("loadedmetadata", onInteriorScroll);
-    }
-    window.addEventListener("scroll", onInteriorScroll, { passive:true });
-  }else if(interiorTrack){
-    interiorTrack.style.height = "100vh";
-  }
 
   /* ===== About Carousel ===== */
   (function(){
