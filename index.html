@@ -101,11 +101,9 @@
   /* ---------- SECTIONS ---------- */
   section{ padding:16vh 8vw; position:relative; }
 
-  /* ---- About Carousel ---- */
-  .about-carousel-wrap{ aspect-ratio:16/9; border:1px solid var(--line); overflow:hidden; }
-  .about-carousel-wrap .carousel{ height:100%; }
-  .about-carousel-wrap .carousel-slide{ background:var(--ink); }
-  .about-carousel-wrap .carousel-slide img{ object-fit:contain; }
+  /* ---- About Carousel (full-bleed) ---- */
+  #about{ padding:0; overflow:hidden; }
+  #about .carousel{ height:84vh; height:84dvh; }
   .carousel{
     position:relative; width:100%; height:72vh; height:72dvh;
     overflow:hidden; user-select:none; cursor:grab;
@@ -313,24 +311,20 @@
 
 <!-- ABOUT -->
 <section id="about">
-  <div class="about-grid">
-    <div class="reveal">
+  <div class="carousel reveal" id="aboutCarousel">
+    <div class="carousel-track" id="carouselTrack">
+      <div class="carousel-slide"><img src="photo2.jpg" alt="Open Living Plan" draggable="false"></div>
+      <div class="carousel-slide"><img src="photo3.jpg" alt="Living Room" draggable="false"></div>
+      <div class="carousel-slide"><img src="photo4.jpg" alt="Dining Room" draggable="false"></div>
+      <div class="carousel-slide"><img src="photo5.jpg" alt="Dining Detail" draggable="false"></div>
+    </div>
+    <button class="car-prev" aria-label="Previous">&#8592;</button>
+    <button class="car-next" aria-label="Next">&#8594;</button>
+    <div class="car-dots" id="carDots"></div>
+    <div class="car-copy">
       <div class="eyebrow">The firm</div>
       <h2>Concrete, steel, timber &mdash; and <em>quiet craftsmanship</em>.</h2>
-      <p>Monolith Custom Homes designs and builds bespoke residences for discerning clients across Bellaire and greater Houston. Every home begins as engineered concrete and steel &mdash; a structure meant to be handed down, not replaced &mdash; and is finished with stone, stucco and wood shaped around the way you live.</p>
-    </div>
-    <div class="about-carousel-wrap reveal">
-      <div class="carousel" id="aboutCarousel">
-        <div class="carousel-track" id="carouselTrack">
-          <div class="carousel-slide"><img src="photo2.jpg" alt="Open Living Plan" draggable="false"></div>
-          <div class="carousel-slide"><img src="photo3.jpg" alt="Living Room" draggable="false"></div>
-          <div class="carousel-slide"><img src="photo4.jpg" alt="Dining Room" draggable="false"></div>
-          <div class="carousel-slide"><img src="photo5.jpg" alt="Dining Detail" draggable="false"></div>
-        </div>
-        <button class="car-prev" aria-label="Previous">&#8592;</button>
-        <button class="car-next" aria-label="Next">&#8594;</button>
-        <div class="car-dots" id="carDots"></div>
-      </div>
+      <p>Monolith Custom Homes designs and builds bespoke residences for discerning clients across Bellaire and greater Houston.</p>
     </div>
   </div>
 </section>
