@@ -113,6 +113,52 @@
 
   /* ---------- SECTIONS ---------- */
   section{ padding:16vh 8vw; position:relative; }
+
+  /* ---- About Carousel ---- */
+  .about-carousel-section{ padding:0; overflow:hidden; }
+  .carousel{
+    position:relative; width:100%; height:72vh; height:72dvh;
+    overflow:hidden; user-select:none; cursor:grab;
+  }
+  .carousel.dragging{ cursor:grabbing; }
+  .carousel-track{
+    display:flex; height:100%;
+    transition:transform .6s cubic-bezier(.25,.46,.45,.94);
+    will-change:transform;
+  }
+  .carousel-slide{ flex:0 0 100%; height:100%; overflow:hidden; }
+  .carousel-slide img{ width:100%; height:100%; object-fit:cover; display:block; pointer-events:none; }
+  .car-prev,.car-next{
+    position:absolute; top:50%; transform:translateY(-50%); z-index:10;
+    background:rgba(236,226,205,.12); border:1px solid rgba(201,187,156,.35);
+    color:#f6f2e9; width:46px; height:46px; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; font-size:20px; backdrop-filter:blur(6px);
+    transition:background .3s; padding:0;
+  }
+  .car-prev{ left:18px; }
+  .car-next{ right:18px; }
+  .car-prev:hover,.car-next:hover{ background:rgba(169,127,47,.4); }
+  @media (max-width:700px){ .car-prev,.car-next{ display:none; } }
+  .car-dots{
+    position:absolute; bottom:22px; left:0; right:0;
+    display:flex; justify-content:center; gap:8px; z-index:10;
+  }
+  .car-dots button{
+    width:6px; height:6px; border-radius:50%;
+    background:rgba(255,255,255,.35); border:0; cursor:pointer; padding:0;
+    transition:background .3s, transform .3s;
+  }
+  .car-dots button.active{ background:var(--gold); transform:scale(1.4); }
+  .car-copy{
+    position:absolute; bottom:0; left:0; right:0; z-index:10;
+    padding:8vh 8vw 6vh;
+    background:linear-gradient(to top, rgba(0,0,0,.60) 0%, rgba(0,0,0,.08) 65%, transparent 100%);
+    pointer-events:none;
+  }
+  .car-copy .eyebrow{ color:#e9c877; text-shadow:0 1px 10px rgba(0,0,0,.5); clip-path:none !important; }
+  .car-copy h2{ font-size:34px; color:#f6f2e9; text-shadow:0 2px 22px rgba(0,0,0,.55); margin-top:10px; }
+  @media (min-width:700px){ .car-copy h2{ font-size:50px; } }
+  .car-copy p{ color:rgba(240,234,218,.72); font-size:14px; margin-top:14px; max-width:52ch; line-height:1.65; }
   .reveal{ opacity:0; transform:translateY(34px); transition:opacity .9s ease, transform .9s ease; }
   .reveal.in{ opacity:1; transform:translateY(0); }
 
@@ -293,15 +339,24 @@
   </div>
 </div>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="about-grid">
-    <div class="reveal">
+<!-- ABOUT: photo carousel -->
+<section id="about" class="about-carousel-section">
+  <div class="carousel reveal" id="aboutCarousel">
+    <div class="carousel-track" id="carouselTrack">
+      <div class="carousel-slide"><img src="photo1.jpg" alt="Bellaire Residence — Exterior" draggable="false"></div>
+      <div class="carousel-slide"><img src="photo2.jpg" alt="Open Living Plan" draggable="false"></div>
+      <div class="carousel-slide"><img src="photo3.jpg" alt="Living Room" draggable="false"></div>
+      <div class="carousel-slide"><img src="photo4.jpg" alt="Dining Room" draggable="false"></div>
+      <div class="carousel-slide"><img src="photo5.jpg" alt="Dining Detail" draggable="false"></div>
+    </div>
+    <button class="car-prev" aria-label="Previous">&#8592;</button>
+    <button class="car-next" aria-label="Next">&#8594;</button>
+    <div class="car-dots" id="carDots"></div>
+    <div class="car-copy">
       <div class="eyebrow">The firm</div>
       <h2>Concrete, steel, timber &mdash; and <em>quiet craftsmanship</em>.</h2>
-      <p>Monolith Custom Homes designs and builds bespoke residences for discerning clients across Bellaire and greater Houston. Every home begins as engineered concrete and steel &mdash; a structure meant to be handed down, not replaced &mdash; and is finished with stone, stucco and wood shaped around the way you live.</p>
+      <p>Monolith Custom Homes designs and builds bespoke residences for discerning clients across Bellaire and greater Houston.</p>
     </div>
-    <div class="about-photo reveal"><span>Residence &mdash; Bellaire</span></div>
   </div>
 </section>
 
@@ -511,6 +566,49 @@
   }else if(interiorTrack){
     interiorTrack.style.height = "100vh";
   }
+
+  /* ===== About Carousel ===== */
+  (function(){
+    var track = document.getElementById("carouselTrack");
+    if(!track) return;
+    var total = track.children.length;
+    var cur = 0;
+    var dotsEl = document.getElementById("carDots");
+    var dots = [];
+    for(var i=0;i<total;i++){
+      var b=document.createElement("button");
+      b.setAttribute("aria-label","Photo "+(i+1));
+      dotsEl.appendChild(b); dots.push(b);
+      (function(n){b.addEventListener("click",function(){go(n);});})(i);
+    }
+    function go(n){
+      cur=(n+total)%total;
+      track.style.transform="translateX(-"+(cur*100)+"%)";
+      dots.forEach(function(d,i){d.classList.toggle("active",i===cur);});
+    }
+    go(0);
+    var el=document.getElementById("aboutCarousel");
+    el.querySelector(".car-prev").addEventListener("click",function(){go(cur-1);});
+    el.querySelector(".car-next").addEventListener("click",function(){go(cur+1);});
+    /* auto-advance, pauses on hover */
+    var timer=setInterval(function(){go(cur+1);},5000);
+    el.addEventListener("mouseenter",function(){clearInterval(timer);});
+    el.addEventListener("mouseleave",function(){timer=setInterval(function(){go(cur+1);},5000);});
+    /* touch swipe */
+    var tx=0;
+    el.addEventListener("touchstart",function(e){tx=e.touches[0].clientX;},{passive:true});
+    el.addEventListener("touchend",function(e){
+      var dx=e.changedTouches[0].clientX-tx;
+      if(Math.abs(dx)>40){go(dx<0?cur+1:cur-1);}
+    },{passive:true});
+    /* mouse drag */
+    var mx=0,drag=false;
+    el.addEventListener("mousedown",function(e){mx=e.clientX;drag=true;el.classList.add("dragging");});
+    window.addEventListener("mouseup",function(e){
+      if(!drag)return; drag=false; el.classList.remove("dragging");
+      var dx=e.clientX-mx; if(Math.abs(dx)>50){go(dx<0?cur+1:cur-1);}
+    });
+  })();
 
   /* ===== Subtle 3D wireframe house (Process section) ===== */
   var holder = document.getElementById("wireframe-holder");
