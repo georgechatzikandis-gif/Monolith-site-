@@ -173,6 +173,12 @@
   }
   .hero-outro.in .rule{ transform:scaleX(1); }
 
+  #about-text{ background:var(--ink); }
+  .about-text-inner{ max-width:760px; }
+  .about-text-inner h2{ font-size:44px; margin:16px 0 24px; }
+  @media (min-width:900px){ .about-text-inner h2{ font-size:56px; } }
+  .about-text-inner p{ color:var(--stone); max-width:56ch; }
+
   .about-grid{ display:grid; grid-template-columns:1fr; gap:6vh; max-width:1200px; margin:0 auto; }
   .about-grid h2{ font-size:44px; margin:16px 0 26px; }
   @media (min-width:900px){ .about-grid h2{ font-size:56px; } }
@@ -323,11 +329,15 @@
     <button class="car-prev" aria-label="Previous">&#8592;</button>
     <button class="car-next" aria-label="Next">&#8594;</button>
     <div class="car-dots" id="carDots"></div>
-    <div class="car-copy">
-      <div class="eyebrow">The firm</div>
-      <h2>Concrete, steel, timber &mdash; and <em>quiet craftsmanship</em>.</h2>
-      <p>Monolith Custom Homes designs and builds bespoke residences for discerning clients across Bellaire and greater Houston.</p>
-    </div>
+  </div>
+</section>
+
+<!-- ABOUT TEXT -->
+<section id="about-text">
+  <div class="about-text-inner reveal">
+    <div class="eyebrow">The firm</div>
+    <h2>Concrete, steel, timber &mdash; and <em>quiet craftsmanship</em>.</h2>
+    <p>Monolith Custom Homes designs and builds bespoke residences for discerning clients across Bellaire and greater Houston.</p>
   </div>
 </section>
 
