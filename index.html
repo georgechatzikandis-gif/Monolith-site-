@@ -59,7 +59,7 @@
   }
   .scrub-stage video{
     position:absolute; top:0; left:0;
-    width:100%; height:100%; object-fit:cover; object-position:center;
+    width:100%; height:100%; object-fit:cover; object-position:center 0%;
   }
 
   .hero-copy{
@@ -449,6 +449,7 @@
     heroCopy.style.opacity = String(Math.max(0, 1 - progress / HERO_FADE_OUT));
     heroOutro.style.opacity = String(Math.min(1, Math.max(0, (progress - OUTRO_FADE_IN) / (1 - OUTRO_FADE_IN))));
     pourFill.style.height = (progress * 100).toFixed(2) + "%";
+    vidFg.style.objectPosition = "center " + (progress * 100).toFixed(1) + "%";
 
     /* nav appears after the hero */
     if(rect.bottom <= window.innerHeight + 40){ siteNav.classList.add("visible"); }
