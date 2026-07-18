@@ -534,16 +534,15 @@
     var el=document.getElementById("aboutCarousel");
     el.querySelector(".car-prev").addEventListener("click",function(){go(cur-1);});
     el.querySelector(".car-next").addEventListener("click",function(){go(cur+1);});
-    /* auto-advance, pauses on hover */
-    var timer=setInterval(function(){go(cur+1);},5000);
-    el.addEventListener("mouseenter",function(){clearInterval(timer);});
-    el.addEventListener("mouseleave",function(){timer=setInterval(function(){go(cur+1);},5000);});
-    /* touch swipe */
-    var tx=0;
-    el.addEventListener("touchstart",function(e){tx=e.touches[0].clientX;},{passive:true});
+    /* touch swipe — only fires on horizontal gestures, never during vertical scroll */
+    var tx=0, ty=0;
+    el.addEventListener("touchstart",function(e){
+      tx=e.touches[0].clientX; ty=e.touches[0].clientY;
+    },{passive:true});
     el.addEventListener("touchend",function(e){
       var dx=e.changedTouches[0].clientX-tx;
-      if(Math.abs(dx)>40){go(dx<0?cur+1:cur-1);}
+      var dy=e.changedTouches[0].clientY-ty;
+      if(Math.abs(dx)>Math.abs(dy) && Math.abs(dx)>40){go(dx<0?cur+1:cur-1);}
     },{passive:true});
     /* mouse drag */
     var mx=0,drag=false;
