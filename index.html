@@ -299,7 +299,7 @@
 <!-- HERO: scroll builds the house -->
 <div class="scrub-track" id="scrubTrack">
   <div class="scrub-stage">
-    <video id="vidFg" muted playsinline preload="auto" src="monolith_build.mp4"></video>
+    <video id="vidFg" muted playsinline autoplay preload="auto" src="monolith_build.mp4"></video>
 
     <div class="hero-copy" id="heroCopy">
       <div class="eyebrow">Bellaire &middot; Houston &middot; Texas</div>
@@ -422,28 +422,11 @@
   var targetTime = 0;
   var progress = 0;
 
-  /* Show first frame as soon as metadata loads */
-  function paintFirstFrame(v){
-    if(!v) return;
-    function trySeek(){
-      try{ v.currentTime = 0.001; }catch(e){}
-    }
-    if(v.readyState >= 1){ trySeek(); }
-    else{ v.addEventListener("loadedmetadata", trySeek, {once:true}); }
-  }
-  paintFirstFrame(vidFg);
-
-  /* Safari blocks play() without a user gesture — unlock on first interaction */
-  var _unlocked = false;
-  function unlockVideo(){
-    if(_unlocked || !vidFg) return;
-    _unlocked = true;
-    var p = vidFg.play();
-    if(p && p.then){ p.then(function(){ vidFg.pause(); }).catch(function(){}); }
-  }
-  ['scroll','touchstart','click','pointerdown'].forEach(function(evt){
-    window.addEventListener(evt, unlockVideo, {passive:true, once:true});
-  });
+  /* autoplay unlocks seeking in Safari; pause immediately so scrub takes over */
+  vidFg.addEventListener("canplay", function(){
+    vidFg.pause();
+    vidFg.currentTime = 0;
+  }, {once: true});
 
   function onScroll(){
     var rect = track.getBoundingClientRect();
